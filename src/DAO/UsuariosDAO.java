@@ -16,27 +16,24 @@ public class UsuariosDAO {
     private UsuariosController controlarUsuario = new UsuariosController();
     private Usuarios user = new Usuarios();
 
-    public boolean login(String usuario, String pass) {
+    public Usuarios login(String usuario, String pass) {
         EntityManager em = controlarUsuario.getEntityManager();
-        boolean valor;
 
         try {
-            Query query = em.createQuery("SELECT u.user, u.password FROM Usuarios u WHERE u.user = :user AND u.password = :password");
+            Query query = em.createQuery("SELECT u FROM Usuarios u WHERE u.user = :user AND u.password = :password");
             query.setParameter("user", usuario);
             query.setParameter("password", pass);
 
-            List resultado = query.getResultList();
+            List<Usuarios> resultado = query.getResultList();
             if (!resultado.isEmpty()) {
-                valor = true;
-
+                return resultado.get(0);
             } else {
-                valor = false;
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas.");
+                return null;
             }
         } catch (Exception e) {
-            valor = false;
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas.");
-
+            return null;
         }
-        return valor;
     }
 }

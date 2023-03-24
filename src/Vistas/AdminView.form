@@ -96,7 +96,7 @@
                   <Component id="btnCatalogo1" alignment="1" max="32767" attributes="0"/>
                   <Component id="btnCatalogo2" alignment="1" max="32767" attributes="0"/>
                   <Component id="btnCatalogo3" alignment="1" max="32767" attributes="0"/>
-                  <Component id="btnCatalogo4" alignment="1" max="32767" attributes="0"/>
+                  <Component id="btnVolver" alignment="1" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -111,9 +111,9 @@
                       <Component id="btnCatalogo2" min="-2" pref="38" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnCatalogo3" min="-2" pref="38" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnCatalogo4" min="-2" pref="38" max="-2" attributes="0"/>
-                      <EmptySpace pref="139" max="32767" attributes="0"/>
+                      <EmptySpace pref="126" max="32767" attributes="0"/>
+                      <Component id="btnVolver" min="-2" pref="38" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -220,7 +220,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnCatalogo4">
+            <Component class="javax.swing.JButton" name="btnVolver">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="1b" green="b3" red="e6" type="rgb"/>
@@ -229,13 +229,16 @@
                   <Font name="Comic Sans MS" size="14" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/folleto.png"/>
+                  <Image iconType="3" name="/Imagenes/back-arrow.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Cat&#xe1;logo"/>
+                <Property name="text" type="java.lang.String" value=" Volver"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor de Mano"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVolverActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

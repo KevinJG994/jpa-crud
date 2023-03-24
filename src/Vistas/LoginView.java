@@ -11,10 +11,9 @@ import javax.swing.JOptionPane;
  */
 public class LoginView extends javax.swing.JFrame {
 
-    
     UsuariosDAO udao = new UsuariosDAO();
     Usuarios usuario = new Usuarios();
-    
+
     public LoginView() {
         initComponents();
         setResizable(false);
@@ -148,17 +147,22 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
-       if(txtUser.getText().equals("") || txtPass.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Los campos estan vacios.");
-        }else{
-            boolean valor = udao.login(txtUser.getText(), txtPass.getText());
-            if(valor == true){
-                ProductosView vistaProducto = new ProductosView();
-                vistaProducto.setVisible(true);
-                this.dispose();
-           
-            }else{
-                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas.");
+        if (txtUser.getText().equals("") || txtPass.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Los campos están vacíos.");
+        } else {
+            Usuarios usuario = udao.login(txtUser.getText(), txtPass.getText());
+            if (usuario != null) {
+                if (usuario.getUser().equals("user")) {
+                    ProductosView vistaProducto = new ProductosView();
+                    vistaProducto.setVisible(true);
+                    this.dispose();
+                } else {
+                    AdminView vistaAdmin = new AdminView();
+                    vistaAdmin.setVisible(true);
+                    this.dispose();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas.");
             }
         }
     }//GEN-LAST:event_btnLogin1ActionPerformed
