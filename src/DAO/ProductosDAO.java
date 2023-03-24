@@ -8,7 +8,10 @@ package DAO;
 import Controlador.ProductosController;
 import Entidades.Productos;
 import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 

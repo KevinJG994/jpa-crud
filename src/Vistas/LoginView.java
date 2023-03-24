@@ -2,6 +2,7 @@
 package Vistas;
 
 import DAO.UsuariosDAO;
+import Entidades.Usuarios;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,6 +13,7 @@ public class LoginView extends javax.swing.JFrame {
 
     
     UsuariosDAO udao = new UsuariosDAO();
+    Usuarios usuario = new Usuarios();
     
     public LoginView() {
         initComponents();
@@ -42,12 +44,11 @@ public class LoginView extends javax.swing.JFrame {
         lbUsuario = new javax.swing.JLabel();
         btnLogin1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelLogin.setBackground(new java.awt.Color(255, 255, 255));
-        panelLogin.setMaximumSize(null);
         panelLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelIzquierdo.setBackground(new java.awt.Color(247, 238, 146));
@@ -155,8 +156,9 @@ public class LoginView extends javax.swing.JFrame {
                 ProductosView vistaProducto = new ProductosView();
                 vistaProducto.setVisible(true);
                 this.dispose();
+           
             }else{
-                 JOptionPane.showMessageDialog(null, "Credenciales incorrectas.");
+                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas.");
             }
         }
     }//GEN-LAST:event_btnLogin1ActionPerformed

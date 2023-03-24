@@ -34,7 +34,7 @@ public class UsuariosDAO {
             }
         } catch (Exception e) {
             valor = false;
-            JOptionPane.showMessageDialog(null, "Credenciales incorrectas.");
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas.");
 
         }
         return valor;
