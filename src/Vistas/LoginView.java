@@ -153,8 +153,8 @@ public class LoginView extends javax.swing.JFrame {
             Usuarios usuario = udao.login(txtUser.getText(), txtPass.getText());
             if (usuario != null) {
                 if (usuario.getUser().equals("user")) {
-                    ProductosView vistaProducto = new ProductosView();
-                    vistaProducto.setVisible(true);
+                    ClientesView vistaCliente = new ClientesView();
+                    vistaCliente.setVisible(true);
                     this.dispose();
                 } else {
                     AdminView vistaAdmin = new AdminView();

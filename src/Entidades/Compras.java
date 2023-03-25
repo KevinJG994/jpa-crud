@@ -95,30 +95,5 @@ public class Compras implements Serializable {
     public void setIdProducto(Productos idProducto) {
         this.idProducto = idProducto;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idCompra != null ? idCompra.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Compras)) {
-            return false;
-        }
-        Compras other = (Compras) object;
-        if ((this.idCompra == null && other.idCompra != null) || (this.idCompra != null && !this.idCompra.equals(other.idCompra))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Entidades.Compras[ idCompra=" + idCompra + " ]";
-    }
-    
+   
 }

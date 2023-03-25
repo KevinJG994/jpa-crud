@@ -118,29 +118,4 @@ public class Clientes implements Serializable {
         this.comprasCollection = comprasCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idCliente != null ? idCliente.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Clientes)) {
-            return false;
-        }
-        Clientes other = (Clientes) object;
-        if ((this.idCliente == null && other.idCliente != null) || (this.idCliente != null && !this.idCliente.equals(other.idCliente))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Entidades.Clientes[ idCliente=" + idCliente + " ]";
-    }
-    
 }
