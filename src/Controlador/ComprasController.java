@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador;
 
 import Controlador.exceptions.NonexistentEntityException;
@@ -19,13 +14,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-/**
- *
- * @author Quebim
- */
-public class ComprasJpaController implements Serializable {
 
-    public ComprasJpaController(EntityManagerFactory emf) {
+public class ComprasController implements Serializable {
+
+    public ComprasController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistencia");
@@ -34,7 +26,7 @@ public class ComprasJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public ComprasJpaController() {
+    public ComprasController() {
     }
     
 

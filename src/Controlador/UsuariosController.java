@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador;
 
 import Controlador.exceptions.IllegalOrphanException;
@@ -21,13 +16,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-/**
- *
- * @author Quebim
- */
-public class UsuariosJpaController implements Serializable {
 
-    public UsuariosJpaController(EntityManagerFactory emf) {
+public class UsuariosController implements Serializable {
+
+    public UsuariosController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistencia");
@@ -36,7 +28,7 @@ public class UsuariosJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public UsuariosJpaController() {
+    public UsuariosController() {
     }
     
 

@@ -1,7 +1,6 @@
 package DAO;
 
-
-import Controlador.UsuariosJpaController;
+import Controlador.UsuariosController;
 import Entidades.Clientes;
 import Entidades.Usuarios;
 import java.util.List;
@@ -9,17 +8,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Quebim
- */
 public class UsuariosDAO {
 
-    private UsuariosJpaController controlarUsuario = new UsuariosJpaController();
+    private UsuariosController controlarUsuario = new UsuariosController();
     private Usuarios user = new Usuarios();
     private Clientes cliente = new Clientes();
     private String mensaje = "";
-           
 
     public Usuarios login(String usuario, String pass) {
         EntityManager em = controlarUsuario.getEntityManager();
@@ -40,10 +34,9 @@ public class UsuariosDAO {
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas.");
             return null;
         }
-  
     }
-    
-     public String registrarUsuario(String usuario, String pass, String rol) {
+
+    public String registrarUsuario(String usuario, String pass, String rol) {
         try {
             user.setIdUsuario(Integer.BYTES);
             user.setUser(usuario);
@@ -52,7 +45,6 @@ public class UsuariosDAO {
             controlarUsuario.create(user);
 
             mensaje = "Usuario añadido.";
-
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             mensaje = "Error al registrar usuario.";
@@ -60,14 +52,12 @@ public class UsuariosDAO {
         return mensaje;
     }
 
-     
-     public int obtenerId(Usuarios usuario) {
-    if (usuario == null) {
-        JOptionPane.showMessageDialog(null, "El usuario es nulo.");
-        return -1;
-    } else {
-        return usuario.getIdUsuario();
+    public int obtenerId(Usuarios usuario) {
+        if (usuario == null) {
+            JOptionPane.showMessageDialog(null, "El usuario es nulo.");
+            return -1;
+        } else {
+            return usuario.getIdUsuario();
+        }
     }
-}
-
 }

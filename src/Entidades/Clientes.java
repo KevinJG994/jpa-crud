@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Entidades;
 
 import java.io.Serializable;
@@ -22,10 +17,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Quebim
- */
 @Entity
 @Table(name = "clientes")
 @XmlRootElement
@@ -60,7 +51,7 @@ public class Clientes implements Serializable {
     private String telefono;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private Collection<Compras> comprasCollection;
-    
+
     public Clientes() {
     }
 
@@ -130,6 +121,4 @@ public class Clientes implements Serializable {
     public void setIdUsuario(Usuarios idUsuario) {
         this.idUsuario = idUsuario;
     }
-    
-
 }

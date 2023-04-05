@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Entidades;
 
 import java.io.Serializable;
@@ -21,10 +16,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Quebim
- */
 @Entity
 @Table(name = "usuarios")
 @XmlRootElement
@@ -92,7 +83,6 @@ public class Usuarios implements Serializable {
         this.password = password;
     }
 
-
     public String getRol() {
         return rol;
     }
@@ -101,7 +91,6 @@ public class Usuarios implements Serializable {
         this.rol = rol;
     }
 
-    
     @XmlTransient
     public Collection<Clientes> getClientesCollection() {
         return clientesCollection;
@@ -110,6 +99,4 @@ public class Usuarios implements Serializable {
     public void setClientesCollection(Collection<Clientes> clientesCollection) {
         this.clientesCollection = clientesCollection;
     }
-    
-    
 }
