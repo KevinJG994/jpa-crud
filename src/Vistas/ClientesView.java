@@ -5,12 +5,16 @@
  */
 package Vistas;
 
-import Controlador.ClientesController;
-import Controlador.ProductosController;
+
+import Controlador.ClientesJpaController;
+import Controlador.ProductosJpaController;
+import DAO.ClientesDAO;
 import DAO.ComprasDAO;
 import DAO.ProductosDAO;
+import DAO.UsuariosDAO;
 import Entidades.Clientes;
 import Entidades.Productos;
+import Entidades.Usuarios;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,10 +28,13 @@ public class ClientesView extends javax.swing.JFrame {
 
    ProductosDAO pdao = new ProductosDAO();
    ComprasDAO comdao = new ComprasDAO();
+   ClientesDAO cldao = new ClientesDAO();
+   UsuariosDAO userdao = new UsuariosDAO();
+   Usuarios usuario = new Usuarios();
    Clientes cliente = new Clientes();
-   ClientesController controlClientes = new ClientesController();
+   ClientesJpaController controlClientes = new ClientesJpaController();
    Productos producto = new Productos();
-   ProductosController controlProductos = new ProductosController();
+   ProductosJpaController controlProductos = new ProductosJpaController();
    
    
     public ClientesView() {
@@ -52,20 +59,20 @@ public class ClientesView extends javax.swing.JFrame {
         panelIzquierdo = new javax.swing.JPanel();
         panelLogo = new javax.swing.JPanel();
         lbLogo = new javax.swing.JLabel();
-        btnVolver = new javax.swing.JButton();
+        btnDesconectar = new javax.swing.JButton();
         panelTitulo = new javax.swing.JPanel();
         lbTitulo = new javax.swing.JLabel();
         panelClientes = new javax.swing.JPanel();
         panelControlCompras = new javax.swing.JPanel();
         lbIdCliente = new javax.swing.JLabel();
-        lbFecha = new javax.swing.JLabel();
         lbIdProducto = new javax.swing.JLabel();
         txtIdCompra = new javax.swing.JTextField();
-        txtIdCliente = new javax.swing.JTextField();
         txtFecha = new javax.swing.JTextField();
         txtIdProducto = new javax.swing.JTextField();
         lbIdCompra = new javax.swing.JLabel();
         btnComprar = new javax.swing.JButton();
+        txtIdCliente = new javax.swing.JTextField();
+        lbFecha1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
 
@@ -94,14 +101,14 @@ public class ClientesView extends javax.swing.JFrame {
             .addComponent(lbLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        btnVolver.setBackground(new java.awt.Color(230, 179, 27));
-        btnVolver.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back-arrow.png"))); // NOI18N
-        btnVolver.setText(" Volver");
-        btnVolver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+        btnDesconectar.setBackground(new java.awt.Color(230, 179, 27));
+        btnDesconectar.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        btnDesconectar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrar-sesion.png"))); // NOI18N
+        btnDesconectar.setText("Desconectar");
+        btnDesconectar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDesconectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
+                btnDesconectarActionPerformed(evt);
             }
         });
 
@@ -114,14 +121,14 @@ public class ClientesView extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(panelIzquierdoLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panelIzquierdoLayout.setVerticalGroup(
             panelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelIzquierdoLayout.createSequentialGroup()
                 .addComponent(panelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 306, Short.MAX_VALUE)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68))
         );
 
@@ -154,18 +161,12 @@ public class ClientesView extends javax.swing.JFrame {
         lbIdCliente.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         lbIdCliente.setText("IdCliente");
 
-        lbFecha.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbFecha.setText("Fecha");
-
         lbIdProducto.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         lbIdProducto.setText("IdProducto");
 
         txtIdCompra.setEditable(false);
         txtIdCompra.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         txtIdCompra.setToolTipText("");
-
-        txtIdCliente.setEditable(false);
-        txtIdCliente.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
 
         txtFecha.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
 
@@ -185,29 +186,39 @@ public class ClientesView extends javax.swing.JFrame {
             }
         });
 
+        txtIdCliente.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        txtIdCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdClienteActionPerformed(evt);
+            }
+        });
+
+        lbFecha1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbFecha1.setText("Fecha");
+
         javax.swing.GroupLayout panelControlComprasLayout = new javax.swing.GroupLayout(panelControlCompras);
         panelControlCompras.setLayout(panelControlComprasLayout);
         panelControlComprasLayout.setHorizontalGroup(
             panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelControlComprasLayout.createSequentialGroup()
-                .addGroup(panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelControlComprasLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelControlComprasLayout.createSequentialGroup()
-                                .addComponent(lbIdCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtIdCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelControlComprasLayout.createSequentialGroup()
-                                .addComponent(lbIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(lbIdCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtIdCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelControlComprasLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbFecha)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                        .addGroup(panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelControlComprasLayout.createSequentialGroup()
+                                .addComponent(lbFecha1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelControlComprasLayout.createSequentialGroup()
+                                .addComponent(lbIdCliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                 .addComponent(btnComprar)
                 .addGap(70, 70, 70))
             .addGroup(panelControlComprasLayout.createSequentialGroup()
@@ -224,20 +235,20 @@ public class ClientesView extends javax.swing.JFrame {
                 .addGroup(panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtIdCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbIdCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelControlComprasLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21))
-                    .addGroup(panelControlComprasLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelControlComprasLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(panelControlComprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -275,14 +286,17 @@ public class ClientesView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+    private void btnDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesconectarActionPerformed
         LoginView login = new LoginView();
         login.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnVolverActionPerformed
+    }//GEN-LAST:event_btnDesconectarActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        int idCliente = Integer.parseInt(txtIdCliente.getText());
+    
+     if (usuario != null) {
+        int idCliente = userdao.obtenerId(usuario);
+    if (idCliente != -1) {
         int idProducto = Integer.parseInt(txtIdProducto.getText());
         String mensaje = "";
 
@@ -290,13 +304,12 @@ public class ClientesView extends javax.swing.JFrame {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             Date fecha = formatoFecha.parse(txtFecha.getText());
 
-            // Obtener el objeto Clientes correspondiente al idCliente
             Clientes cliente = controlClientes.findClientes(idCliente);
 
-            // Obtener el objeto Productos correspondiente al idProducto
+     
             Productos producto = controlProductos.findProductos(idProducto);
 
-            // Llamar al método realizarCompra() pasando como parámetros el objeto cliente, producto y fecha
+          
             mensaje = comdao.realizarCompra(fecha, cliente, producto);
         } catch (ParseException ex) {
             mensaje = "Error al ingresar registro.";
@@ -304,7 +317,11 @@ public class ClientesView extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(null, mensaje);
         limpiarCompra();
-
+    }
+        
+        
+    }     
+        
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void tablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductosMouseClicked
@@ -312,9 +329,16 @@ public class ClientesView extends javax.swing.JFrame {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaActual = new Date();
         txtFecha.setText(formatoFecha.format(fechaActual));
-        txtIdCliente.setText("3");
         txtIdProducto.setText(tablaProductos.getValueAt(seleccionar, 0) + "");
+        if (usuario != null) {
+            int idCliente = userdao.obtenerId(usuario);
+            txtIdCliente.setText(String.valueOf(idCliente));
+        }
     }//GEN-LAST:event_tablaProductosMouseClicked
+
+    private void txtIdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -362,12 +386,17 @@ public class ClientesView extends javax.swing.JFrame {
         txtIdCliente.setText("");
         txtIdProducto.setText("");
     }
+        
+          
+    public void setUsuarioActual(Usuarios usuario) {
+        this.usuario = usuario;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnComprar;
-    private javax.swing.JButton btnVolver;
+    private javax.swing.JButton btnDesconectar;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel lbFecha;
+    private javax.swing.JLabel lbFecha1;
     private javax.swing.JLabel lbIdCliente;
     private javax.swing.JLabel lbIdCompra;
     private javax.swing.JLabel lbIdProducto;

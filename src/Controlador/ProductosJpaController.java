@@ -25,9 +25,9 @@ import javax.persistence.Persistence;
  *
  * @author Quebim
  */
-public class ProductosController implements Serializable {
+public class ProductosJpaController implements Serializable {
 
-    public ProductosController(EntityManagerFactory emf) {
+    public ProductosJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistencia");
@@ -36,7 +36,7 @@ public class ProductosController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public ProductosController() {
+    public ProductosJpaController() {
     }
     
 

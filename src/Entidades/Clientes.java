@@ -14,9 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -37,6 +38,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Clientes.findByTelefono", query = "SELECT c FROM Clientes c WHERE c.telefono = :telefono")})
 public class Clientes implements Serializable {
 
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
+    @OneToOne(optional = false)
+    private Usuarios idUsuario;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,9 +58,9 @@ public class Clientes implements Serializable {
     private String email;
     @Column(name = "telefono")
     private String telefono;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private Collection<Compras> comprasCollection;
-
+    
     public Clientes() {
     }
 
@@ -117,5 +122,14 @@ public class Clientes implements Serializable {
     public void setComprasCollection(Collection<Compras> comprasCollection) {
         this.comprasCollection = comprasCollection;
     }
+
+    public Usuarios getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuarios idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+    
 
 }

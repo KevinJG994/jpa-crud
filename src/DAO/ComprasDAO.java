@@ -1,9 +1,10 @@
 
 package DAO;
 
-import Controlador.ClientesController;
-import Controlador.ComprasController;
-import Controlador.ProductosController;
+
+import Controlador.ClientesJpaController;
+import Controlador.ComprasJpaController;
+import Controlador.ProductosJpaController;
 import Entidades.Clientes;
 import Entidades.Compras;
 import Entidades.Productos;
@@ -19,12 +20,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ComprasDAO {
     
-    private ComprasController controlCompras = new ComprasController();
+    private ComprasJpaController controlCompras = new ComprasJpaController();
     private Compras compra = new Compras();
     private Clientes cliente = new Clientes();
-    private ClientesController controlClientes = new ClientesController();
+    private ClientesJpaController controlClientes = new ClientesJpaController();
     private Productos producto = new Productos();
-    private ProductosController controlProductos = new ProductosController();
+    private ProductosJpaController controlProductos = new ProductosJpaController();
     
     private String mensaje ="";
     

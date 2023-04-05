@@ -5,13 +5,10 @@
  */
 package DAO;
 
-import Controlador.ProductosController;
+import Controlador.ProductosJpaController;
 import Entidades.Productos;
 import java.math.BigDecimal;
-import java.util.Iterator;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ProductosDAO {
 
-    private ProductosController controlProductos = new ProductosController();
+    private ProductosJpaController controlProductos = new ProductosJpaController();
     private Productos producto = new Productos();
     private String mensaje = "";
 

@@ -23,9 +23,9 @@ import javax.persistence.Persistence;
  *
  * @author Quebim
  */
-public class ComprasController implements Serializable {
+public class ComprasJpaController implements Serializable {
 
-    public ComprasController(EntityManagerFactory emf) {
+    public ComprasJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistencia");
@@ -34,7 +34,7 @@ public class ComprasController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public ComprasController() {
+    public ComprasJpaController() {
     }
     
 

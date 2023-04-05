@@ -1,9 +1,16 @@
 
 package DAO;
 
-import Controlador.ClientesController;
+
+import Controlador.ClientesJpaController;
+import Controlador.UsuariosJpaController;
 import Entidades.Clientes;
+import Entidades.Usuarios;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,17 +20,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ClientesDAO {
 
-    private ClientesController controlClientes = new ClientesController();
+    private ClientesJpaController controlClientes = new ClientesJpaController();
     private Clientes cliente = new Clientes();
     private String mensaje = "";
 
-    public String insertarCliente(String nombre, String apellido, String email, String telefono) {
+    public String insertarCliente(String nombre, String apellido, String email, String telefono, Usuarios idUsuario) {
         try {
             cliente.setIdCliente(Integer.BYTES);
             cliente.setNombre(nombre);
             cliente.setApellido(apellido);
             cliente.setEmail(email);
             cliente.setTelefono(telefono);
+            cliente.setIdUsuario(idUsuario);
             controlClientes.create(cliente);
 
             mensaje = "Registro añadido.";
@@ -35,13 +43,14 @@ public class ClientesDAO {
         return mensaje;
     }
 
-    public String modificarCliente(int id, String nombre, String apellido, String email, String telefono) {
+    public String modificarCliente(int id, String nombre, String apellido, String email, String telefono, Usuarios idUsuario) {
         try {
             cliente.setIdCliente(id);
             cliente.setNombre(nombre);
             cliente.setApellido(apellido);
             cliente.setEmail(email);
             cliente.setTelefono(telefono);
+            cliente.setIdUsuario(idUsuario);
             controlClientes.edit(cliente);
 
             mensaje = "Registro actualizado.";
@@ -68,21 +77,25 @@ public class ClientesDAO {
     
     public void mostrarClientes (JTable tabla) {
         DefaultTableModel modelo;
-        String[] titulo = {"ID", "NOMBRE", "APELLIDO", "EMAIL", "TELÉFONO"};
+        String[] titulo = {"ID", "NOMBRE", "APELLIDO", "EMAIL", "TELÉFONO", "IdUsuario"};
         modelo = new DefaultTableModel(null, titulo);
 
         List<Clientes> datos = controlClientes.findClientesEntities();
 
-        String[] datosClientes = new String[5];
+        String[] datosClientes = new String[6];
         for (Clientes cliente : datos) {
+
             datosClientes[0] = cliente.getIdCliente() + "";
             datosClientes[1] = cliente.getNombre() + "";
             datosClientes[2] = cliente.getApellido() + "";
             datosClientes[3] = cliente.getEmail() + "";
             datosClientes[4] = cliente.getTelefono() + "";
-           
+            datosClientes[5] = cliente.getIdUsuario() + "";
             modelo.addRow(datosClientes);
+            
         }
         tabla.setModel(modelo);
     }
+   
+
 }

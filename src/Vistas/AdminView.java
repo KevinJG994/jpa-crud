@@ -8,7 +8,9 @@ package Vistas;
 import DAO.ClientesDAO;
 import DAO.ComprasDAO;
 import DAO.ProductosDAO;
+import DAO.UsuariosDAO;
 import Entidades.Productos;
+import Entidades.Usuarios;
 import java.math.BigDecimal;
 import javafx.scene.control.ComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -24,6 +26,8 @@ public class AdminView extends javax.swing.JFrame {
     ProductosDAO pdao = new ProductosDAO();
     ClientesDAO cdao= new ClientesDAO();
     ComprasDAO comdao = new ComprasDAO();
+    UsuariosDAO userdao = new UsuariosDAO();
+    Usuarios usuario = new Usuarios();
 
     public AdminView() {
         initComponents();
@@ -48,6 +52,14 @@ public class AdminView extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        lbidUsuario2 = new javax.swing.JLabel();
+        txtidUsuario = new javax.swing.JTextField();
+        lbidUsuario3 = new javax.swing.JLabel();
+        txtidUsuario2 = new javax.swing.JTextField();
+        lbidUsuario4 = new javax.swing.JLabel();
+        txtidUsuario3 = new javax.swing.JTextField();
+        lbidUsuario = new javax.swing.JLabel();
+        txtidUsuario4 = new javax.swing.JTextField();
         panelAdmin = new javax.swing.JPanel();
         panelIzquierdo = new javax.swing.JPanel();
         panelLogo = new javax.swing.JPanel();
@@ -55,7 +67,7 @@ public class AdminView extends javax.swing.JFrame {
         btnProductos = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnCompras = new javax.swing.JButton();
-        btnVolver = new javax.swing.JButton();
+        btnDesconectar = new javax.swing.JButton();
         panelTitulo = new javax.swing.JPanel();
         lbTitulo = new javax.swing.JLabel();
         tabbedPanel = new javax.swing.JTabbedPane();
@@ -81,25 +93,38 @@ public class AdminView extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         btnInsertar = new javax.swing.JButton();
         lbTipo = new javax.swing.JLabel();
-        txtTipo = new javax.swing.JTextField();
+        jComboTipo = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
         panelClientes = new javax.swing.JPanel();
         lbPanelClientes = new javax.swing.JLabel();
         panelControlCL = new javax.swing.JPanel();
-        lbNombreCL = new javax.swing.JLabel();
-        lbApellido = new javax.swing.JLabel();
-        lbEmail = new javax.swing.JLabel();
-        lbTelefono = new javax.swing.JLabel();
-        txtIdCL = new javax.swing.JTextField();
-        txtNombreCL = new javax.swing.JTextField();
-        txtApellido = new javax.swing.JTextField();
-        txtEmail = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
-        lbIdCL = new javax.swing.JLabel();
         btnEliminarCL = new javax.swing.JButton();
         btnModificarCL = new javax.swing.JButton();
         btnInsertarCL = new javax.swing.JButton();
+        misClientes = new javax.swing.JPanel();
+        lbIdCL = new javax.swing.JLabel();
+        txtIdCL = new javax.swing.JTextField();
+        lbNombreCL = new javax.swing.JLabel();
+        txtNombreCL = new javax.swing.JTextField();
+        lbApellido = new javax.swing.JLabel();
+        txtApellido = new javax.swing.JTextField();
+        lbEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        lbTelefono = new javax.swing.JLabel();
+        txtTelefono = new javax.swing.JTextField();
+        lbIdUsuario = new javax.swing.JLabel();
+        txtIdUsuario = new javax.swing.JTextField();
+        misUsuarios = new javax.swing.JPanel();
+        lbIdUser = new javax.swing.JLabel();
+        lbPass = new javax.swing.JLabel();
+        lbRol = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
+        lbUsuario = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        txtIdUser = new javax.swing.JTextField();
+        btnRegistrar = new javax.swing.JButton();
+        jComboRol = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
 
@@ -118,6 +143,26 @@ public class AdminView extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+
+        lbidUsuario2.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbidUsuario2.setText("idUsuario");
+
+        txtidUsuario.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+
+        lbidUsuario3.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbidUsuario3.setText("idUsuario");
+
+        txtidUsuario2.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+
+        lbidUsuario4.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbidUsuario4.setText("idUsuario");
+
+        txtidUsuario3.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+
+        lbidUsuario.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbidUsuario.setText("idUsuario");
+
+        txtidUsuario4.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -179,14 +224,14 @@ public class AdminView extends javax.swing.JFrame {
             }
         });
 
-        btnVolver.setBackground(new java.awt.Color(230, 179, 27));
-        btnVolver.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back-arrow.png"))); // NOI18N
-        btnVolver.setText(" Volver");
-        btnVolver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+        btnDesconectar.setBackground(new java.awt.Color(230, 179, 27));
+        btnDesconectar.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        btnDesconectar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrar-sesion.png"))); // NOI18N
+        btnDesconectar.setText(" Desconectar");
+        btnDesconectar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDesconectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
+                btnDesconectarActionPerformed(evt);
             }
         });
 
@@ -196,11 +241,11 @@ public class AdminView extends javax.swing.JFrame {
             panelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelIzquierdoLayout.createSequentialGroup()
                 .addComponent(panelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
             .addComponent(btnProductos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnClientes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnCompras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnVolver, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnDesconectar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelIzquierdoLayout.setVerticalGroup(
             panelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +258,7 @@ public class AdminView extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(btnCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
 
@@ -358,7 +403,7 @@ public class AdminView extends javax.swing.JFrame {
         lbTipo.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         lbTipo.setText("Tipo");
 
-        txtTipo.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        jComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comic", "Funko" }));
 
         javax.swing.GroupLayout panelControlLayout = new javax.swing.GroupLayout(panelControl);
         panelControl.setLayout(panelControlLayout);
@@ -396,9 +441,9 @@ public class AdminView extends javax.swing.JFrame {
                                     .addComponent(lbPrecio)
                                     .addComponent(lbTipo))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                    .addComponent(txtTipo)))))
+                                .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(panelControlLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(btnModificar)
@@ -430,7 +475,7 @@ public class AdminView extends javax.swing.JFrame {
                     .addComponent(lbFranquicia, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFranquicia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
                 .addGroup(panelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -474,37 +519,10 @@ public class AdminView extends javax.swing.JFrame {
 
         lbPanelClientes.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         lbPanelClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbPanelClientes.setText("Panel Clientes");
-        panelClientes.add(lbPanelClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 590, 32));
+        lbPanelClientes.setText("Panel Usuarios                       Panel Clientes");
+        panelClientes.add(lbPanelClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 590, 32));
 
         panelControlCL.setBackground(new java.awt.Color(247, 238, 146));
-
-        lbNombreCL.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbNombreCL.setText("Nombre");
-
-        lbApellido.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbApellido.setText("Apellido");
-
-        lbEmail.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbEmail.setText("Email");
-
-        lbTelefono.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbTelefono.setText("Teléfono");
-
-        txtIdCL.setEditable(false);
-        txtIdCL.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        txtIdCL.setToolTipText("");
-
-        txtNombreCL.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-
-        txtApellido.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-
-        txtEmail.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-
-        txtTelefono.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-
-        lbIdCL.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbIdCL.setText("Id");
 
         btnEliminarCL.setBackground(new java.awt.Color(230, 179, 27));
         btnEliminarCL.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -539,85 +557,130 @@ public class AdminView extends javax.swing.JFrame {
             }
         });
 
+        misClientes.setBackground(new java.awt.Color(230, 179, 27));
+        misClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbIdCL.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbIdCL.setText("Id");
+        misClientes.add(lbIdCL, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, 25));
+
+        txtIdCL.setEditable(false);
+        txtIdCL.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        txtIdCL.setToolTipText("");
+        misClientes.add(txtIdCL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 200, -1));
+
+        lbNombreCL.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbNombreCL.setText("Nombre");
+        misClientes.add(lbNombreCL, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 42, 25));
+
+        txtNombreCL.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        misClientes.add(txtNombreCL, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 170, -1));
+
+        lbApellido.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbApellido.setText("Apellido");
+        misClientes.add(lbApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, 25));
+
+        txtApellido.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        misClientes.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 170, -1));
+
+        lbEmail.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbEmail.setText("Email");
+        misClientes.add(lbEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, 25));
+
+        txtEmail.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        misClientes.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 180, -1));
+
+        lbTelefono.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbTelefono.setText("Teléfono");
+        misClientes.add(lbTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, 25));
+
+        txtTelefono.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        misClientes.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 170, -1));
+
+        lbIdUsuario.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbIdUsuario.setText("idUsuario");
+        misClientes.add(lbIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, 25));
+
+        txtIdUsuario.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        misClientes.add(txtIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 160, -1));
+
+        misUsuarios.setBackground(new java.awt.Color(230, 179, 27));
+        misUsuarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbIdUser.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbIdUser.setText("idUsuario");
+        misUsuarios.add(lbIdUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 50, 25));
+
+        lbPass.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbPass.setText("Password");
+        misUsuarios.add(lbPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, 25));
+
+        lbRol.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbRol.setText("Rol");
+        misUsuarios.add(lbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 30, 25));
+        misUsuarios.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 170, 20));
+
+        lbUsuario.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbUsuario.setText("Usuario");
+        misUsuarios.add(lbUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 42, 25));
+
+        txtUsuario.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        misUsuarios.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 180, -1));
+
+        txtIdUser.setEditable(false);
+        txtIdUser.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        misUsuarios.add(txtIdUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 170, -1));
+
+        btnRegistrar.setBackground(new java.awt.Color(230, 179, 27));
+        btnRegistrar.setFont(new java.awt.Font("Comic Sans MS", 1, 10)); // NOI18N
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregue-el-simbolo-de-la-interfaz-de-personas-de-la-persona-negra-de-cerca-con-el-signo-mas-en-un-circulo-pequeno.png"))); // NOI18N
+        btnRegistrar.setText(" Registrar");
+        btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+        misUsuarios.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 110, 30));
+
+        jComboRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "cliente", "admin" }));
+        misUsuarios.add(jComboRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 80, 30));
+
         javax.swing.GroupLayout panelControlCLLayout = new javax.swing.GroupLayout(panelControlCL);
         panelControlCL.setLayout(panelControlCLLayout);
         panelControlCLLayout.setHorizontalGroup(
             panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelControlCLLayout.createSequentialGroup()
-                .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelControlCLLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(panelControlCLLayout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(txtIdCL))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelControlCLLayout.createSequentialGroup()
-                                .addComponent(lbNombreCL, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNombreCL))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelControlCLLayout.createSequentialGroup()
-                                .addComponent(lbApellido)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))))
-                    .addGroup(panelControlCLLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(btnInsertarCL)))
-                .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelControlCLLayout.createSequentialGroup()
-                        .addGap(107, 107, 107)
-                        .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelControlCLLayout.createSequentialGroup()
-                                .addComponent(lbEmail)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelControlCLLayout.createSequentialGroup()
-                                .addComponent(lbTelefono)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(panelControlCLLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(btnModificarCL)
-                        .addGap(58, 58, 58)
-                        .addComponent(btnEliminarCL, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
-            .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelControlCLLayout.createSequentialGroup()
-                    .addGap(27, 27, 27)
-                    .addComponent(lbIdCL, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(501, Short.MAX_VALUE)))
+                .addGap(27, 27, 27)
+                .addComponent(btnInsertarCL)
+                .addGap(75, 75, 75)
+                .addComponent(btnModificarCL)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEliminarCL, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelControlCLLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(misUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(misClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelControlCLLayout.setVerticalGroup(
             panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelControlCLLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
+                .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(misClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                    .addComponent(misUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIdCL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbNombreCL, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombreCL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminarCL, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInsertarCL, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificarCL, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
-            .addGroup(panelControlCLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelControlCLLayout.createSequentialGroup()
-                    .addGap(26, 26, 26)
-                    .addComponent(lbIdCL, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(149, Short.MAX_VALUE)))
+                    .addComponent(btnModificarCL, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarCL, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
-        panelClientes.add(panelControlCL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 570, 200));
+        panelClientes.add(panelControlCL, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 580, 260));
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -638,7 +701,7 @@ public class AdminView extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tablaClientes);
 
-        panelClientes.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 570, 220));
+        panelClientes.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 580, 190));
 
         tabbedPanel.addTab("Productos", panelClientes);
 
@@ -655,7 +718,7 @@ public class AdminView extends javax.swing.JFrame {
         String franquicia = txtFranquicia.getText();
         String descripcion = txtDescripcion.getText();
         BigDecimal precio = new BigDecimal(txtPrecio.getText());
-        String tipo = txtTipo.getText();
+        String tipo = (String) jComboTipo.getSelectedItem();
         
         String mensaje = "";
         mensaje = pdao.insertarProducto(nombre, franquicia, descripcion, precio, tipo);
@@ -675,7 +738,7 @@ public class AdminView extends javax.swing.JFrame {
             String franquicia = txtFranquicia.getText();
             String descripcion = txtDescripcion.getText();
             BigDecimal precio = new BigDecimal(txtPrecio.getText());
-            String tipo = txtTipo.getText();
+            String tipo = (String) jComboTipo.getSelectedItem();
 
             String mensaje = "";
             mensaje = pdao.modificarProducto(id, nombre, franquicia, descripcion, precio, tipo);
@@ -709,19 +772,20 @@ public class AdminView extends javax.swing.JFrame {
         txtFranquicia.setText(tablaProductos.getValueAt(seleccionar, 2) + "");
         txtDescripcion.setText(tablaProductos.getValueAt(seleccionar, 3) + "");
         txtPrecio.setText(tablaProductos.getValueAt(seleccionar, 4) + "");
-        txtTipo.setText(tablaProductos.getValueAt(seleccionar, 5) + "");
+        jComboTipo.setSelectedItem(tablaProductos.getValueAt(seleccionar, 5));
 
     }//GEN-LAST:event_tablaProductosMouseClicked
 
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+    private void btnDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesconectarActionPerformed
         LoginView login = new LoginView();
         login.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnVolverActionPerformed
+    }//GEN-LAST:event_btnDesconectarActionPerformed
 
     private void btnEliminarCLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCLActionPerformed
           if (txtNombreCL.getText().equals("") || txtApellido.getText().equals("")
-                || txtEmail.getText().equals("") || txtTelefono.getText().equals("")) {
+                || txtEmail.getText().equals("") || txtTelefono.getText().equals("")
+                || txtIdUsuario.getText().equals(""))  {
             JOptionPane.showMessageDialog(null, "Debe rellenar todos los campos.");
         } else {
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el cliente?");
@@ -738,7 +802,8 @@ public class AdminView extends javax.swing.JFrame {
 
     private void btnModificarCLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarCLActionPerformed
         if (txtNombreCL.getText().equals("") || txtApellido.getText().equals("")
-                || txtEmail.getText().equals("") || txtTelefono.getText().equals("")) {
+                || txtEmail.getText().equals("") || txtTelefono.getText().equals("")
+                || txtIdUsuario.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debe rellenar todos los campos.");
         } else {
 
@@ -747,9 +812,11 @@ public class AdminView extends javax.swing.JFrame {
             String apellido = txtApellido.getText();
             String email = txtEmail.getText();
             String telefono = txtTelefono.getText();
+            usuario.setIdUsuario(Integer.parseInt(txtIdUsuario.getText()));
+           
 
             String mensaje = "";
-            mensaje = cdao.modificarCliente(id, nombre, apellido, email, telefono);
+            mensaje = cdao.modificarCliente(id, nombre, apellido, email, telefono, usuario);
             JOptionPane.showMessageDialog(null, mensaje);
             limpiarClientes();
             mostrarTablaClientes();
@@ -761,9 +828,10 @@ public class AdminView extends javax.swing.JFrame {
         String apellido = txtApellido.getText();
         String email = txtEmail.getText();
         String telefono = txtTelefono.getText();
+        usuario.setIdUsuario(Integer.parseInt(txtIdUsuario.getText()));
         
         String mensaje = "";
-        mensaje = cdao.insertarCliente(nombre, apellido, email, telefono);
+        mensaje = cdao.insertarCliente(nombre, apellido, email, telefono, usuario);
         JOptionPane.showMessageDialog(null, mensaje);
         limpiarClientes();
         mostrarTablaClientes();
@@ -791,6 +859,18 @@ public class AdminView extends javax.swing.JFrame {
         tabbedPanel.setSelectedIndex(0);
         mostrarTablaCompras();
     }//GEN-LAST:event_btnComprasActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+       
+        String usuario = txtUsuario.getText();
+        String pass = txtPass.getText();
+        String rol = (String) jComboRol.getSelectedItem();
+        
+        String mensaje = "";
+        mensaje = userdao.registrarUsuario(usuario, pass, rol);
+        JOptionPane.showMessageDialog(null, mensaje);
+        limpiarUsuarios();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -833,8 +913,6 @@ public class AdminView extends javax.swing.JFrame {
         txtFranquicia.setText("");
         txtDescripcion.setText("");
         txtPrecio.setText("");
-        txtTipo.setText("");
-
     }
     
     private void limpiarClientes() {
@@ -844,6 +922,12 @@ public class AdminView extends javax.swing.JFrame {
         txtEmail.setText("");
         txtTelefono.setText("");
       
+    }
+    
+     private void limpiarUsuarios() {
+        txtIdUser.setText("");
+        txtUsuario.setText("");
+        txtPass.setText("");
     }
 
     private void mostrarTablaProductos() {
@@ -862,6 +946,7 @@ public class AdminView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnCompras;
+    private javax.swing.JButton btnDesconectar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnEliminarCL;
     private javax.swing.JButton btnInsertar;
@@ -869,7 +954,9 @@ public class AdminView extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnModificarCL;
     private javax.swing.JButton btnProductos;
-    private javax.swing.JButton btnVolver;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> jComboRol;
+    private javax.swing.JComboBox<String> jComboTipo;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -883,16 +970,27 @@ public class AdminView extends javax.swing.JFrame {
     private javax.swing.JLabel lbFranquicia;
     private javax.swing.JLabel lbId;
     private javax.swing.JLabel lbIdCL;
+    private javax.swing.JLabel lbIdUser;
+    private javax.swing.JLabel lbIdUsuario;
     private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lbNombreCL;
     private javax.swing.JLabel lbPanelClientes;
     private javax.swing.JLabel lbPanelProductos;
     private javax.swing.JLabel lbPanelProductos1;
+    private javax.swing.JLabel lbPass;
     private javax.swing.JLabel lbPrecio;
+    private javax.swing.JLabel lbRol;
     private javax.swing.JLabel lbTelefono;
     private javax.swing.JLabel lbTipo;
     private javax.swing.JLabel lbTitulo;
+    private javax.swing.JLabel lbUsuario;
+    private javax.swing.JLabel lbidUsuario;
+    private javax.swing.JLabel lbidUsuario2;
+    private javax.swing.JLabel lbidUsuario3;
+    private javax.swing.JLabel lbidUsuario4;
+    private javax.swing.JPanel misClientes;
+    private javax.swing.JPanel misUsuarios;
     private javax.swing.JPanel panelAdmin;
     private javax.swing.JPanel panelClientes;
     private javax.swing.JPanel panelCompras;
@@ -912,10 +1010,17 @@ public class AdminView extends javax.swing.JFrame {
     private javax.swing.JTextField txtFranquicia;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtIdCL;
+    private javax.swing.JTextField txtIdUser;
+    private javax.swing.JTextField txtIdUsuario;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreCL;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtTelefono;
-    private javax.swing.JTextField txtTipo;
+    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtidUsuario;
+    private javax.swing.JTextField txtidUsuario2;
+    private javax.swing.JTextField txtidUsuario3;
+    private javax.swing.JTextField txtidUsuario4;
     // End of variables declaration//GEN-END:variables
 }

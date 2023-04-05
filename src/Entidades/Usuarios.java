@@ -6,7 +6,9 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,6 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Usuarios.findByUser", query = "SELECT u FROM Usuarios u WHERE u.user = :user")
     , @NamedQuery(name = "Usuarios.findByPassword", query = "SELECT u FROM Usuarios u WHERE u.password = :password")})
 public class Usuarios implements Serializable {
+
+    @Basic(optional = false)
+    @Column(name = "rol")
+    private String rol;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private Collection<Clientes> clientesCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,10 +61,11 @@ public class Usuarios implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuarios(Integer idUsuario, String user, String password) {
+    public Usuarios(Integer idUsuario, String user, String password, String rol) {
         this.idUsuario = idUsuario;
         this.user = user;
         this.password = password;
+        this.rol = rol;
     }
 
     public Integer getIdUsuario() {
@@ -81,29 +92,24 @@ public class Usuarios implements Serializable {
         this.password = password;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
-        return hash;
+
+    public String getRol() {
+        return rol;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuarios)) {
-            return false;
-        }
-        Usuarios other = (Usuarios) object;
-        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
-            return false;
-        }
-        return true;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
-    @Override
-    public String toString() {
-        return "Entidades.Usuarios[ idUsuario=" + idUsuario + " ]";
+    
+    @XmlTransient
+    public Collection<Clientes> getClientesCollection() {
+        return clientesCollection;
     }
+
+    public void setClientesCollection(Collection<Clientes> clientesCollection) {
+        this.clientesCollection = clientesCollection;
+    }
+    
     
 }

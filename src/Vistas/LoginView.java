@@ -152,15 +152,17 @@ public class LoginView extends javax.swing.JFrame {
         } else {
             Usuarios usuario = udao.login(txtUser.getText(), txtPass.getText());
             if (usuario != null) {
-                if (usuario.getUser().equals("user")) {
-                    ClientesView vistaCliente = new ClientesView();
-                    vistaCliente.setVisible(true);
-                    this.dispose();
-                } else {
-                    AdminView vistaAdmin = new AdminView();
-                    vistaAdmin.setVisible(true);
-                    this.dispose();
-                }
+    if (usuario.getRol().equals("cliente")) {
+        ClientesView vistaCliente = new ClientesView();
+        vistaCliente.setUsuarioActual(usuario); // setear usuario actual
+        vistaCliente.setVisible(true);
+        this.dispose();
+    } else {
+        AdminView vistaAdmin = new AdminView();
+        vistaAdmin.setVisible(true);
+        this.dispose();
+    }
+
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectas.");
             }

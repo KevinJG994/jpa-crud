@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import Entidades.Usuarios;
 import Entidades.Compras;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,9 +26,9 @@ import javax.persistence.Persistence;
  *
  * @author Quebim
  */
-public class ClientesController implements Serializable {
+public class ClientesJpaController implements Serializable {
 
-    public ClientesController(EntityManagerFactory emf) {
+    public ClientesJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistencia");
@@ -36,10 +37,10 @@ public class ClientesController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public ClientesController() {
+    public ClientesJpaController() {
     }
     
-    
+
     public void create(Clientes clientes) {
         if (clientes.getComprasCollection() == null) {
             clientes.setComprasCollection(new ArrayList<Compras>());
@@ -48,6 +49,11 @@ public class ClientesController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Usuarios idUsuario = clientes.getIdUsuario();
+            if (idUsuario != null) {
+                idUsuario = em.getReference(idUsuario.getClass(), idUsuario.getIdUsuario());
+                clientes.setIdUsuario(idUsuario);
+            }
             Collection<Compras> attachedComprasCollection = new ArrayList<Compras>();
             for (Compras comprasCollectionComprasToAttach : clientes.getComprasCollection()) {
                 comprasCollectionComprasToAttach = em.getReference(comprasCollectionComprasToAttach.getClass(), comprasCollectionComprasToAttach.getIdCompra());
@@ -55,6 +61,10 @@ public class ClientesController implements Serializable {
             }
             clientes.setComprasCollection(attachedComprasCollection);
             em.persist(clientes);
+            if (idUsuario != null) {
+                idUsuario.getClientesCollection().add(clientes);
+                idUsuario = em.merge(idUsuario);
+            }
             for (Compras comprasCollectionCompras : clientes.getComprasCollection()) {
                 Clientes oldIdClienteOfComprasCollectionCompras = comprasCollectionCompras.getIdCliente();
                 comprasCollectionCompras.setIdCliente(clientes);
@@ -78,6 +88,8 @@ public class ClientesController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Clientes persistentClientes = em.find(Clientes.class, clientes.getIdCliente());
+            Usuarios idUsuarioOld = persistentClientes.getIdUsuario();
+            Usuarios idUsuarioNew = clientes.getIdUsuario();
             Collection<Compras> comprasCollectionOld = persistentClientes.getComprasCollection();
             Collection<Compras> comprasCollectionNew = clientes.getComprasCollection();
             List<String> illegalOrphanMessages = null;
@@ -92,6 +104,10 @@ public class ClientesController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (idUsuarioNew != null) {
+                idUsuarioNew = em.getReference(idUsuarioNew.getClass(), idUsuarioNew.getIdUsuario());
+                clientes.setIdUsuario(idUsuarioNew);
+            }
             Collection<Compras> attachedComprasCollectionNew = new ArrayList<Compras>();
             for (Compras comprasCollectionNewComprasToAttach : comprasCollectionNew) {
                 comprasCollectionNewComprasToAttach = em.getReference(comprasCollectionNewComprasToAttach.getClass(), comprasCollectionNewComprasToAttach.getIdCompra());
@@ -100,6 +116,14 @@ public class ClientesController implements Serializable {
             comprasCollectionNew = attachedComprasCollectionNew;
             clientes.setComprasCollection(comprasCollectionNew);
             clientes = em.merge(clientes);
+            if (idUsuarioOld != null && !idUsuarioOld.equals(idUsuarioNew)) {
+                idUsuarioOld.getClientesCollection().remove(clientes);
+                idUsuarioOld = em.merge(idUsuarioOld);
+            }
+            if (idUsuarioNew != null && !idUsuarioNew.equals(idUsuarioOld)) {
+                idUsuarioNew.getClientesCollection().add(clientes);
+                idUsuarioNew = em.merge(idUsuarioNew);
+            }
             for (Compras comprasCollectionNewCompras : comprasCollectionNew) {
                 if (!comprasCollectionOld.contains(comprasCollectionNewCompras)) {
                     Clientes oldIdClienteOfComprasCollectionNewCompras = comprasCollectionNewCompras.getIdCliente();
@@ -150,6 +174,11 @@ public class ClientesController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Usuarios idUsuario = clientes.getIdUsuario();
+            if (idUsuario != null) {
+                idUsuario.getClientesCollection().remove(clientes);
+                idUsuario = em.merge(idUsuario);
             }
             em.remove(clientes);
             em.getTransaction().commit();
