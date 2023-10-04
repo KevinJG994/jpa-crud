@@ -1,3 +1,7 @@
+![GitHub repo size](https://img.shields.io/github/repo-size/KevinJG994/jpa-crud)
+![GitHub last commit](https://img.shields.io/github/last-commit/KevinJG994/jpa-crud)
+
+
 # Sistema de Gestión de Base de Datos con JPA CRUD
 
 Este repositorio contiene un sistema de gestión de base de datos desarrollado con Java Persistence API (JPA) que realiza operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en una base de datos relacional. Esta aplicación proporciona una interfaz fácil de usar para interactuar con la base de datos y realizar diversas operaciones.
